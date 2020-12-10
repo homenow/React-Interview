@@ -24,9 +24,11 @@ Get as far as you can in 3-4 hours Front-End-Only
 - Table displaying content as you add
 
 ### Instructions
-- Fork the Repo
+- Clone the repo onto your local machine
+- Checkout into a new branch i.e. : interview-YOUR_INITIALS
+- Push that branch up
 - Make an initial commit to mark your start time
-- Once complete submit a pull request into the 1B branch
+- Once complete make a final commit with message "Final Commit" and push your changes up
 
 
 
