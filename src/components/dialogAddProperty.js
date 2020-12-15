@@ -45,9 +45,18 @@ const useStyles = makeStyles(() => ({
     left: '50%',
     top: '50%',
   },
+  detailContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
 }));
 
-export default function DialogAddProperty({ open, onClose }) {
+export default function DialogAddProperty({
+  open,
+  onClose,
+  setTableData,
+  tableData,
+}) {
   const classes = useStyles();
   const [secondPageOpen, setSecondPageOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -57,6 +66,11 @@ export default function DialogAddProperty({ open, onClose }) {
   const [data, setData] = React.useState({
     type: '',
     floors: 0,
+    streetAddress: '',
+    city: '',
+    state: '',
+    bedrooms: 0,
+    baths: 0,
   });
 
   const handleChange = (event) => {
@@ -78,6 +92,13 @@ export default function DialogAddProperty({ open, onClose }) {
 
     const result = await promise;
     console.log('the data :', data, result);
+    setSecondPageOpen(false);
+    setTableData([...tableData, data]);
+  };
+
+  const closeSecondDialog = () => {
+    onClose(true);
+    setSecondPageOpen(false);
   };
 
   return (
@@ -93,7 +114,6 @@ export default function DialogAddProperty({ open, onClose }) {
           <DialogTitle>Add Property</DialogTitle>
           <DialogContent className={classes.pageContainer}>
             <Typography>Property Type</Typography>
-
             <Select
               value={data.type}
               displayEmpty
@@ -107,13 +127,55 @@ export default function DialogAddProperty({ open, onClose }) {
               <MenuItem value="condominium">Condominium</MenuItem>
               <MenuItem value="apartment">Apartment</MenuItem>
             </Select>
-
             <Typography>Property Nickname</Typography>
             <TextField
               value={data.nickname}
               name="nickname"
               onChange={handleChange}
+              placeholder="Nickname"
             />
+            <Typography>Street Address</Typography>
+            <TextField
+              value={data.streetAddress}
+              name="streetAddress"
+              onChange={handleChange}
+              placeholder="Address 1"
+            />
+            <Typography>Street Address Cont. - optional</Typography>
+            <TextField
+              value={data.streetAddress2}
+              name="streetAddress2"
+              onChange={handleChange}
+              placeholder="Address 2"
+            />
+            <Typography>City</Typography>
+            <TextField
+              value={data.city}
+              name="city"
+              onChange={handleChange}
+              placeholder="City"
+            />
+            <Typography>Zip Code</Typography>
+            <TextField
+              value={data.zipCode}
+              name="zipCode"
+              onChange={handleChange}
+              placeholder="Zip"
+            />
+            <Typography>State</Typography>
+            <Select
+              value={data.state}
+              displayEmpty
+              onChange={handleChange}
+              inputProps={{
+                name: 'state',
+                id: 'state',
+              }}
+            >
+              <MenuItem value="ak">arkansa</MenuItem>
+              <MenuItem value="az">arizona</MenuItem>
+              <MenuItem value="al">alabama</MenuItem>
+            </Select>
             <Button
               onClick={() => {
                 //  setFirstPageOpen(false);
@@ -127,17 +189,49 @@ export default function DialogAddProperty({ open, onClose }) {
           </DialogContent>
         </Box>
       </Dialog>
-      <Dialog className={classes.dialog} open={secondPageOpen}>
+      <Dialog
+        className={classes.dialog}
+        open={secondPageOpen}
+        fullWidth="true"
+        maxWidth="sm"
+      >
         <Box component="form">
           <DialogTitle>Add Property Details</DialogTitle>
-          <DialogContent>
-            <Typography>Property Nickname</Typography>
-            <TextField
-              name="floors"
-              value={data.floors}
-              onChange={handleChange}
-            />
-            <Button onClick={submitForm}>Save and Close</Button>
+          <DialogContent className={classes.detailContainer}>
+            <div>
+              <Typography>Floors - optional</Typography>
+              <TextField
+                name="floors"
+                value={data.floors}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <Typography>Bedrooms - optional</Typography>
+              <TextField
+                name="bedrooms"
+                value={data.bedrooms}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <Typography>Baths - optional</Typography>
+              <TextField
+                name="baths"
+                value={data.baths}
+                onChange={handleChange}
+              />
+            </div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={closeSecondDialog}
+            >
+              Previous
+            </Button>
+            <Button variant="contained" color="primary" onClick={submitForm}>
+              Save and Close
+            </Button>
           </DialogContent>
         </Box>
         {loading && (

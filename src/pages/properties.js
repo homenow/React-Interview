@@ -24,10 +24,12 @@ const useStyles = makeStyles(() => ({
 export default function Properties() {
   const classes = useStyles();
   const [openDialog, setOpenDialog] = React.useState(false);
+  const [data, setTableData] = React.useState([]);
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
+
   return (
     <div>
       <NavBar />
@@ -42,9 +44,14 @@ export default function Properties() {
           >
             Add Property
           </Button>
-          <DialogAddProperty open={openDialog} onClose={setOpenDialog} />
+          <DialogAddProperty
+            open={openDialog}
+            onClose={setOpenDialog}
+            setTableData={setTableData}
+            tableData={data}
+          />
         </div>
-        <TableProperty />
+        <TableProperty data={data} />
       </div>
     </div>
   );

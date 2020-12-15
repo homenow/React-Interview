@@ -1,7 +1,9 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
+
+import React, { useEffect } from 'react';
 
 import Table from '@material-ui/core/Table';
-//  import TableBody from '@material-ui/core/TableBody';
+import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
@@ -17,7 +19,11 @@ const StyledHead = withStyles(() => ({
   },
 }))(TableHead);
 
-export default function DenseTable() {
+export default function TableProperty({ data }) {
+  useEffect(() => {
+    console.log('data update : ', data);
+  });
+
   return (
     <TableContainer>
       <Table size="medium">
@@ -28,6 +34,17 @@ export default function DenseTable() {
             <TableCell>State</TableCell>
           </TableRow>
         </StyledHead>
+        <TableBody>
+          {data
+            ? data.map((row) => (
+                <TableRow key={row.streetAddress}>
+                  <TableCell align="right">{row.streetAddress}</TableCell>
+                  <TableCell align="right">{row.city}</TableCell>
+                  <TableCell align="right">{row.state}</TableCell>
+                </TableRow>
+              ))
+            : null}
+        </TableBody>
       </Table>
     </TableContainer>
   );
