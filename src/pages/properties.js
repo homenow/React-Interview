@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 
 import NavBar from '../components/navBar';
 import TableProperty from '../components/tableProperty';
+import DialogAddProperty from '../components/dialogAddProperty';
 
 const useStyles = makeStyles(() => ({
   headline: {
@@ -22,7 +23,11 @@ const useStyles = makeStyles(() => ({
 }));
 export default function Properties() {
   const classes = useStyles();
+  const [openDialog, setOpenDialog] = React.useState(false);
 
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
   return (
     <div>
       <NavBar />
@@ -33,9 +38,11 @@ export default function Properties() {
             variant="contained"
             color="primary"
             className={classes.addButton}
+            onClick={handleOpenDialog}
           >
             Add Property
           </Button>
+          <DialogAddProperty open={openDialog} onClose={setOpenDialog} />
         </div>
         <TableProperty />
       </div>
