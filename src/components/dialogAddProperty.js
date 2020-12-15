@@ -48,6 +48,10 @@ const useStyles = makeStyles(() => ({
   detailContainer: {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
+  },
+  addButton: {
+    marginLeft: '5vw',
   },
 }));
 
@@ -82,7 +86,6 @@ export default function DialogAddProperty({
 
   const submitForm = async () => {
     const promise = new Promise((res) => {
-      console.log('start spinner');
       setLoading(true);
       setTimeout(() => {
         setLoading(false);
@@ -90,8 +93,7 @@ export default function DialogAddProperty({
       }, 2000);
     });
 
-    const result = await promise;
-    console.log('the data :', data, result);
+    await promise;
     setSecondPageOpen(false);
     setTableData([...tableData, data]);
   };
@@ -177,11 +179,12 @@ export default function DialogAddProperty({
               <MenuItem value="al">alabama</MenuItem>
             </Select>
             <Button
+              variant="contained"
+              color="primary"
+              className={classes.addButton}
               onClick={() => {
-                //  setFirstPageOpen(false);
                 onClose(false);
                 setSecondPageOpen(true);
-                //  console.log('open , firstpageOpen', open, firstPageOpen);
               }}
             >
               Next
@@ -225,11 +228,17 @@ export default function DialogAddProperty({
             <Button
               variant="contained"
               color="primary"
+              className={classes.addButton}
               onClick={closeSecondDialog}
             >
               Previous
             </Button>
-            <Button variant="contained" color="primary" onClick={submitForm}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.addButton}
+              onClick={submitForm}
+            >
               Save and Close
             </Button>
           </DialogContent>

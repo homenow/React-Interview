@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,9 +9,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core/styles';
-/* const useStyle = makeStyles({
-    tableHead: {}
-}) */
 
 const StyledHead = withStyles(() => ({
   root: {
@@ -20,10 +17,6 @@ const StyledHead = withStyles(() => ({
 }))(TableHead);
 
 export default function TableProperty({ data }) {
-  useEffect(() => {
-    console.log('data update : ', data);
-  });
-
   return (
     <TableContainer>
       <Table size="medium">
